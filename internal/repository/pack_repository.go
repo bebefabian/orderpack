@@ -1,6 +1,6 @@
 package repository
 
 type PackRepository interface {
-	GetPacks() []int
-	UpdatePacks(newPacks []int)
+	GetPacks() ([]int, error)
+	UpdatePacks(newPacks []int) error
 }

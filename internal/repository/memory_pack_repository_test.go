@@ -8,7 +8,9 @@ import (
 
 func TestNewMemoryPackRepository_ShouldStartEmpty(t *testing.T) {
 	repo := NewMemoryPackRepository()
-	assert.Equal(t, []int{}, repo.GetPacks(), "Pack sizes should start empty")
+	results, err := repo.GetPacks()
+	assert.Nil(t, err)
+	assert.Equal(t, []int{}, results, "Pack sizes should start empty")
 }
 
 func TestUpdatePacks_ShouldUpdateAndSortDescending(t *testing.T) {
@@ -20,5 +22,7 @@ func TestUpdatePacks_ShouldUpdateAndSortDescending(t *testing.T) {
 
 	// Expected sorted order
 	expected := []int{1500, 700, 300, 100}
-	assert.Equal(t, expected, repo.GetPacks(), "Pack sizes should be updated and sorted in descending order")
+	results, err := repo.GetPacks()
+	assert.Nil(t, err)
+	assert.Equal(t, expected, results, "Pack sizes should be updated and sorted in descending order")
 }

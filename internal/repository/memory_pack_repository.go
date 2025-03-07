@@ -19,18 +19,19 @@ func NewMemoryPackRepository() *MemoryPackRepository {
 }
 
 // GetPacks returns the current available pack sizes
-func (r *MemoryPackRepository) GetPacks() []int {
+func (r *MemoryPackRepository) GetPacks() ([]int, error) {
 	r.mu.RLock()
 	defer r.mu.RUnlock()
-	return r.packSizes
+	return r.packSizes, nil
 }
 
 // UpdatePacks modifies the available pack sizes dynamically
-func (r *MemoryPackRepository) UpdatePacks(newPacks []int) {
+func (r *MemoryPackRepository) UpdatePacks(newPacks []int) error {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 
 	// Sort pack sizes in descending order for better optimization
 	sort.Sort(sort.Reverse(sort.IntSlice(newPacks)))
 	r.packSizes = newPacks
+	return nil
 }

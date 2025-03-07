@@ -20,7 +20,11 @@ func NewPackHandler(service service.PackService) *PackHandler {
 
 // GetPackSizes handles GET /packs
 func (h *PackHandler) GetPackSizes(c *gin.Context) {
-	packs := h.packService.GetPackSizes()
+	packs, err := h.packService.GetPackSizes()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "error getting pack sizes"})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"packs": packs})
 }
 
@@ -32,8 +36,12 @@ func (h *PackHandler) UpdatePackSizes(c *gin.Context) {
 		return
 	}
 
-	h.packService.UpdatePackSizes(newPackSizes)
+	err := h.packService.UpdatePackSizes(newPackSizes)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"message": "error updating pack sizes"})
+	}
 	c.JSON(http.StatusOK, gin.H{"message": "Pack sizes updated", "packs": newPackSizes})
+
 }
 
 // CalculateOrder handles GET /calculate?quantity=X
@@ -46,7 +54,11 @@ func (h *PackHandler) CalculateOrder(c *gin.Context) {
 	}
 
 	// Call service method
-	packDistribution := h.packService.CalculatePacks(orderQuantity)
+	packDistribution, err := h.packService.CalculatePacks(orderQuantity)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error calculating packs"})
+		return
+	}
 
 	c.JSON(http.StatusOK, packDistribution)
 }
