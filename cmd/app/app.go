@@ -30,7 +30,7 @@ func (a *App) Initialize() {
 
 	// Enable CORS
 	a.Router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000", "https://orderpack-production.up.railway.app"},
+		AllowOrigins:     []string{"http://localhost:3000", "https://orderpack-ui.vercel.app"},
 		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
 		AllowHeaders:     []string{"Content-Type"},
 		AllowCredentials: true,
