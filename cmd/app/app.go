@@ -30,11 +30,16 @@ func (a *App) Initialize() {
 
 	// Enable CORS
 	a.Router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"http://localhost:3000", "https://orderpack-production.up.railway.app"},
 		AllowMethods:     []string{"GET", "POST", "OPTIONS"},
 		AllowHeaders:     []string{"Content-Type"},
 		AllowCredentials: true,
 	}))
+
+	// Handle OPTIONS method for CORS
+	a.Router.OPTIONS("/*any", func(c *gin.Context) {
+		c.Status(204)
+	})
 
 	// Register routes
 	a.Router.GET("/packs", packHandler.GetPackSizes)
