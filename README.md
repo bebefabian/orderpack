@@ -69,13 +69,14 @@ The API can also handle custom pack sizes. For instance, with pack sizes of 23, 
 1. Clone the repository:
    ```
     git clone https://github.com/bebefabian/orderpack.git
+      ```
 2. Install dependencies:
       ```
    go mod tidy
-
-3. Build the application:
       ```
-   go build -o orderpack cmd/app/main.go
+3. Run the application:
+      ```
+    go run cmd/main.go
 
 
 ## Deployment
